@@ -88,32 +88,33 @@ async function makePdf() {
   if (!window.html2canvas || !window.jspdf) throw new Error('lib');
   if (document.fonts && document.fonts.ready) await document.fonts.ready;
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const W = 210, H = 297, M = 12;
   
-  // Fondo de la página
-  doc.setFillColor(245, 246, 248); 
-  doc.rect(0, 0, W, H, 'F');
-
-  // Capturamos todo el contenedor del informe completo de una sola vez
   const reportEl = $('report');
+  
+  // 1. Capturamos todo el informe con buena resolución
   const cv = await html2canvas(reportEl, { scale: 2, backgroundColor: '#f5f6f8', useCORS: true, logging: false });
   
-  const w = W - 2 * M;
-  const maxH = H - 2 * M;
-  let h = cv.height * w / cv.width;
-  let renderW = w;
-  let renderH = h;
+  // 2. Mantenemos el ancho estándar de un A4 (210 mm)
+  const W = 210;
+  const M = 12; // Márgenes
+  const contentW = W - 2 * M;
+  
+  // 3. Calculamos la altura real proporcional para que NO se comprima el texto
+  const contentH = cv.height * contentW / cv.width;
+  const H = contentH + 2 * M; // Altura total personalizada del PDF
 
-  // Si el contenido supera la altura de una página, lo escalamos proporcionalmente para que encaje perfecto en una sola hoja
-  if (h > maxH) {
-    const ratio = maxH / h;
-    renderH = maxH;
-    renderW = w * ratio;
-  }
+  // 4. Creamos el PDF con un alto a medida en lugar de A4 estático
+  const doc = new jsPDF({
+    unit: 'mm',
+    format: [W, H]
+  });
 
-  // Dibujamos la imagen ajustada a una única página
-  doc.addImage(cv.toDataURL('image/jpeg', 0.95), 'JPEG', M + (w - renderW) / 2, M, renderW, renderH);
+  // Fondo de la página
+  doc.setFillColor(245, 246, 248);
+  doc.rect(0, 0, W, H, 'F');
+
+  // Dibuja el contenido a tamaño completo y legible
+  doc.addImage(cv.toDataURL('image/jpeg', 0.95), 'JPEG', M, M, contentW, contentH);
 
   const slug = (S.opts.client || S.sel.client || 'cliente').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40) || 'cliente';
