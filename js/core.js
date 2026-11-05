@@ -56,7 +56,7 @@ function parseSheet(name, ws) {
     const iva = g(rows.iva, c);
     let otros = t - (pot + ene + serv + ie + iva); if (Math.abs(otros) < 0.005) otros = 0;
     const typeText = typeRow ? strAt(ws, typeRow, c) : '';
-    let nm = hdrRow ? strAt(ws, hdrRow, c).replace(/^actual\s*/i, '').trim() : '';
+    let nm = strAt(ws, 9, c).replace(/^actual\s*/i, '').trim();
     if (/^oferta [a-z]$/i.test(nm)) nm = '';
     cols.push({ c, letter: XLSX.utils.encode_col(c - 1), total: t, pot, ene, serv, ie, iva, otros, typeText, brand: nm,
                 annual: rows.ann ? numAt(ws, rows.ann, c) : null });
