@@ -121,7 +121,7 @@ function buildModel(sheet, opts) {
     pct: actual.total ? (actual.total - o.total) / actual.total : 0
   }));
   offers.sort((a, b) => b.saving - a.saving);
-  offers.forEach((o, i) => { o.rank = i + 1; o.label = (opts.showNames && o.brand) ? o.brand : `Oferta ${i + 1}`; o.sub = typeLabel(o); });
+offers.forEach((o, i) => { o.rank = i + 1; o.label = o.brand ? o.brand : `Oferta ${i + 1}`; o.sub = typeLabel(o); });
   const bestOf = t => offers.filter(o => o.type === t)[0] || null;
   return { sheet, actual, offers, bestFix: bestOf('fix'), bestIdx: bestOf('idx'), kind: sheet.kind };
 }
