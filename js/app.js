@@ -4,7 +4,7 @@ const fmtP = v => nf(Math.abs(v) * 100, 1);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 const COL = { idx: '#2563eb', fix: '#2a9d8f', neg: '#e5484d', act: '#9aa3b2' };
 
-const S = { file: null, sheets: [], sel: null, opts: { client: '', period: '', showNames: false, types: {} } };
+const S = { file: null, sheets: [], sel: null, opts: { client: '', period: '', showNames: true, types: {} } };
 const $ = id => document.getElementById(id);
 
 /* ===== Informe ===== */
