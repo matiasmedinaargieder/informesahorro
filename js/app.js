@@ -89,17 +89,32 @@ async function makePdf() {
   if (document.fonts && document.fonts.ready) await document.fonts.ready;
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const W = 210, H = 297, M = 12, GAP = 4;
-  const paint = () => { doc.setFillColor(245, 246, 248); doc.rect(0, 0, W, H, 'F'); };
-  paint(); let y = M;
-  const blocks = document.querySelectorAll('#report .blk');
-  for (const el of blocks) {
-    const cv = await html2canvas(el, { scale: 2.5, backgroundColor: '#f5f6f8', useCORS: true, logging: false });
-    const w = W - 2 * M, h = cv.height * w / cv.width;
-    if (y + h > H - M && y > M) { doc.addPage(); paint(); y = M; }
-    doc.addImage(cv.toDataURL('image/jpeg', 0.95), 'JPEG', M, y, w, h);
-    y += h + GAP;
+  const W = 210, H = 297, M = 12;
+  
+  // Fondo de la página
+  doc.setFillColor(245, 246, 248); 
+  doc.rect(0, 0, W, H, 'F');
+
+  // Capturamos todo el contenedor del informe completo de una sola vez
+  const reportEl = $('report');
+  const cv = await html2canvas(reportEl, { scale: 2, backgroundColor: '#f5f6f8', useCORS: true, logging: false });
+  
+  const w = W - 2 * M;
+  const maxH = H - 2 * M;
+  let h = cv.height * w / cv.width;
+  let renderW = w;
+  let renderH = h;
+
+  // Si el contenido supera la altura de una página, lo escalamos proporcionalmente para que encaje perfecto en una sola hoja
+  if (h > maxH) {
+    const ratio = maxH / h;
+    renderH = maxH;
+    renderW = w * ratio;
   }
+
+  // Dibujamos la imagen ajustada a una única página
+  doc.addImage(cv.toDataURL('image/jpeg', 0.95), 'JPEG', M + (w - renderW) / 2, M, renderW, renderH);
+
   const slug = (S.opts.client || S.sel.client || 'cliente').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^A-Za-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40) || 'cliente';
   const filename = `Informe_ahorro_${slug}.pdf`;
@@ -107,11 +122,6 @@ async function makePdf() {
   try { if (window.claude && typeof window.claude.use === 'function') dl = await window.claude.use('downloads'); } catch (e) { dl = null; }
   if (dl) { await dl.save({ filename, data: doc.output('blob') }); }
   else { doc.save(filename); }
-}
-function pdfError(e) {
-  if (e && e.code === 'declined') return ['Descarga cancelada.', ''];
-  if (e && e.message === 'lib') return ['No se han podido cargar las herramientas de PDF. Revisa la conexión y recarga la página.', 'err'];
-  return ['No he podido generar el PDF. Inténtalo de nuevo.', 'err'];
 }
 
 /* ===== Interfaz ===== */
