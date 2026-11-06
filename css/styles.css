@@ -109,3 +109,49 @@ table.types select{padding:6px 8px;border:1px solid var(--line);border-radius:8p
 .rpt tr.tot td{font-weight:800;border-top:2px solid #cfd4dc;border-bottom:0;color:#0f172a}
 .rpt .foot{font-size:11.5px;color:#64748b;line-height:1.5;padding:0 4px 4px}
 .rpt .foot b{color:#334155}
+
+
+/* ================= Segundo Excel (ajuste de potencia) ================= */
+.drops{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.drops{grid-template-columns:1fr}}
+.slotTitle{font-size:13px;font-weight:700;margin:0 0 8px}
+.slotSub{font-weight:500;color:var(--muted);font-size:12px}
+.hint{font-size:12.5px;color:var(--muted);margin:12px 0 0}
+#drop,#dropP{padding:26px 14px}
+#dropP{border:2px dashed var(--line);border-radius:14px;text-align:center;cursor:pointer;transition:.15s;background:transparent}
+#dropP:hover,#dropP:focus-visible,#dropP.over{border-color:var(--accent);background:var(--soft);outline:none}
+#dropP svg{width:40px;height:40px;color:var(--accent)}
+#dropP b{display:block;margin-top:8px;font-size:15px}
+#dropP span{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+#fileInfoP{display:flex;align-items:center;gap:10px;margin-top:14px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;font-size:14px}
+#fileInfoP .nm{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+#fileInfoP .sz{color:var(--muted);font-size:12px}
+#fileInfoP button{border:0;background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;padding:2px 6px;border-radius:8px}
+#fileInfoP button:hover{background:var(--soft);color:var(--ink)}
+
+/* Informe de potencia (mismo estilo que el resto) */
+.rpt{gap:36px}
+.rpt .rep{display:flex;flex-direction:column;gap:14px}
+.rpt .kpi .v.neg{color:#dc2626}
+.rpt .brp{display:grid;grid-template-columns:46px 1fr 132px;align-items:center;gap:12px}
+.rpt .brp .n{font-size:13px;font-weight:700;color:#0f172a}
+.rpt .twin{display:flex;flex-direction:column;gap:4px}
+.rpt .twin .trk{height:11px}
+.rpt .brp .val{text-align:right;font-size:13.5px;font-weight:800;line-height:1.15}
+.rpt .brp .val small{display:block;font-size:11px;font-weight:600;margin-top:1px}
+.rpt .muted{color:#64748b}
+.rpt table.pw{font-size:12.5px}
+.rpt table.pw th,.rpt table.pw td{padding:8px 5px}
+.rpt table.pw tr.sub td{font-weight:700;border-top:1px solid #cfd4dc;color:#0f172a}
+.rpt table.pw td.pos{color:#0f9d58;font-weight:700}.rpt table.pw td.neg{color:#dc2626;font-weight:700}
+.rpt .sum{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.rpt .sum>div{background:#eef8f4;border:1px solid #d5ece3;border-radius:12px;padding:12px 14px}
+.rpt .sum span{display:block;font-size:12px;color:#475569;font-weight:600}
+.rpt .sum b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;color:#0f9d58;margin-top:2px}
+.rpt .sum small{font-size:11.5px;color:#64748b}
+.rpt .sum .bad{background:#fdf0f0;border-color:#f6d3d3}.rpt .sum .bad b{color:#dc2626}
+.rpt .note{background:#fff8e8;border-color:#f3dfae}
+.rpt .note h2{font-size:14px}
+.rpt .note p{margin:6px 0 0;font-size:12.5px;color:#5b4a1f;line-height:1.55}
+.rpt table.pw tr td.pos{color:#0f9d58}
+.rpt table.pw tr td.neg{color:#dc2626}
