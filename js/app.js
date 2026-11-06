@@ -64,7 +64,7 @@ function renderComparison() {
   const baseTxt = period ? `el consumo de ${esc(period)}` : 'el consumo de la factura analizada';
 
   return `<div class="rep">
-  <div class="blk"><div class="head"><div><h1>Ahorro en tu factura de ${gas ? 'gas' : 'luz'}</h1><div class="sub">${esc(sub)}</div></div><img class="logo" src="${LOGO}" alt=""></div>
+  <div class="blk"><div class="head"><div><h1>Ahorro en tu factura de ${gas ? 'gas' : 'luz'}</h1><div class="sub">${esc(sub)}</div></div><img class="logo" src="img/logo.png" alt=""></div>
     <div class="kpis">
       <div class="kpi"><div class="l">Tu factura actual</div><div class="v">${E(m.actual.total)}</div><div class="s">${period ? esc(period) + ', ' : ''}IVA incluido</div></div>
       ${kpi('Mejor ahorro con precio fijo', m.bestFix, 'fix', 'fix')}
@@ -128,7 +128,7 @@ function renderPower(p) {
   const noteBlk = p.note ? `<div class="blk"><div class="box note"><h2>A tener en cuenta</h2><p>${esc(p.note)}</p></div></div>` : '';
   const contact = p.contact && p.contact.length ? `<br><b>Argieder</b> · ${esc(p.contact.join(' · '))}` : '';
   return `<div class="rep">
-  <div class="blk"><div class="head"><div><h1>Ahorro con el ajuste de potencia</h1><div class="sub">${esc(sub)}</div></div><img class="logo" src="${LOGO}" alt=""></div>
+  <div class="blk"><div class="head"><div><h1>Ahorro con el ajuste de potencia</h1><div class="sub">${esc(sub)}</div></div><img class="logo" src="img/logo.png" alt=""></div>
     <div class="kpis">
       <div class="kpi"><div class="l">Pagas hoy por potencia</div><div class="v">${E(p.totalOldIva)}</div><div class="s">${p.days ? nf(p.days, Number.isInteger(p.days) ? 0 : 2) + ' días, ' : ''}IVA incluido</div></div>
       <div class="kpi"><div class="l">Pagarías con el ajuste</div><div class="v idx">${E(p.totalNewIva)}</div><div class="s">IVA incluido</div></div>
