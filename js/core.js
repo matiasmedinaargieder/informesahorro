@@ -133,9 +133,9 @@ function parsePowerSheet(name, ws) {
   const maxR = rg.e.r + 1, maxC = rg.e.c + 1;
   // ---- cabecera de la tabla (por texto, no por posición fija)
   let hr = 0, cOldKw = 0;
-  for (let r = 1; r <= Math.min(maxR, 40) && !hr; r++)
-    for (let c = 1; c <= maxC; c++)
-      if (/^pot\.? ?contratada/.test(N(strAt(ws, r, c)))) { hr = r; cOldKw = c; break; }
+for (let r = 1; r <= Math.min(maxR, 40) && !hr; r++)
+  for (let c = 1; c <= maxC; c++)
+    if (/^pot\.? ?contratada/.test(N(strAt(ws, r, c)))) { hr = r; cOldKw = c; break; }
   if (!hr) return null;
   let cNewKw = 0, cDays = 0;
   for (let c = 1; c <= maxC; c++) {
